@@ -62,10 +62,18 @@ manual_overrides = {
     'x': 'f',  # 'oc' -> 'of'
     'w': 'i',  # single-letter words
     'j': 'o',  # if-> of
+    'v': 'c',  # fouus -> focus
     'n': 'u',  # stfdy ->study
-    'q': 'd',  # vata -> data
-    'a': 'a',  #  correct "that the"
-    'e': 'e'   # from  :the"
+    #'q': 'd',  # vata -> data orginally thought data 
+    'k': 'n',  # aod -> and
+    's': 'p',  # sujsru -> proper
+    'q': 'k',  # tasd -> task
+    'o': 'g',  # accordinb -> according
+    'l': 'b',  # pecause -> because
+    'a': 'x',  #  eaplain -> explain
+    'g': 'z',  #  recognixing -> recognizing
+    'e': 'v',  # giee -> give
+    'c': 'w'  # jould -> would
 
 
 

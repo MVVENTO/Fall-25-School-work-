@@ -22,35 +22,70 @@ explanation of each step, the screenshots, and the online code link. Submit the 
 Brightspace. Your report should be clear, thorough, and demonstrate both the logic behind your
 approach and the practical implementation of your solution. The ciphertext is given below: '''
 
+# Author : Melissa Vento-Wolverton
+# Date Deadline: 9/10/2025
+# File Name : cipher.py
+# Project #1
+# Description : Substitution cipher decryption using frequency analysis and manual overrides
+
 import re
 
-# Step 1: 
-# Read the text file (cipher plaintext)
+# Step 1: Read ciphertext
 with open('cipher.txt', 'r') as file:
     text = file.read()
 
-# Step 2: 
-# Use regex to fina all letters a-z
+# Step 2: Frequency analysis
 letters_only = re.findall(r'[a-z]', text)
-
-# Step 3:
-# Manually Count letter Frequency
 freq = {}
 for letter in letters_only:
-    if letter in freq:
-        freq[letter] += 1
-    else:
-        freq[letter] = 1
+    freq[letter] = freq.get(letter, 0) + 1
 
-# Step 4 :
-# Sort letters by Frequency (High to low)
+# Step 3: Sort letters by frequency (descending)
 sorted_freq = sorted(freq.items(), key=lambda item: item[1], reverse=True)
 sorted_letters = [item[0] for item in sorted_freq]
 
-# Step 5:
-# Sort Letters by Frequency (High to low)
-print("Letter Frequency (Sorted Most used to least used):")
+print("Letter Frequency (Most used to least used):")
 for letter, count in sorted_freq:
     print(f"{letter}: {count}")
 
-# Results : 
+# Step 4: Initial mapping using frequency analysis
+freq_order = 'etaoinshrdlucmfwypvbgkjqxz'  # English letter frequency
+substitution_map = {}
+for cipher_letter, eng_letter in zip(sorted_letters, freq_order):
+    substitution_map[cipher_letter] = eng_letter
+
+# Keep a copy of initial frequency-based mapping for reporting
+freq_based_map = substitution_map.copy()
+
+# Step 5: Manual overrides for context (applied AFTER initial guess)
+manual_overrides = {
+    'x': 'f',  # 'oc' -> 'of'
+    'w': 'i',  # single-letter words
+    'j': 'o',  # if-> of
+    'n': 'u',  # stfdy ->study
+    'q': 'd',  # vata -> data
+    'a': 'a',  #  correct "that the"
+    'e': 'e'   # from  :the"
+
+
+
+
+}
+substitution_map.update(manual_overrides)
+
+# Step 6: Decode text using final substitution map
+decoded_text = ''.join(substitution_map.get(c, c) if c.islower() else c for c in text)
+
+# Step 7: Output frequency-based mapping
+print("\nInitial Frequency-Based Map (cipher => guessed letter):")
+for cipher_letter in sorted_letters:
+    print(f"{cipher_letter} => {freq_based_map.get(cipher_letter)}")
+
+# Step 8: Output final substitution map
+print("\nFinal Substitution Map with Manual Overrides:")
+for cipher_letter in sorted_letters:
+    print(f"{cipher_letter} => {substitution_map.get(cipher_letter)}")
+
+# Step 9: Output decoded text
+print("\nDecoded Text Guess:")
+print(decoded_text)
